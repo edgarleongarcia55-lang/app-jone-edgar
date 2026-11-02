@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- =========================================================================================
+         METADATOS Y RECURSOS DEL DOCUMENTO - ECOSOLAR
+         ========================================================================================= -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="EcoSolar - Soluciones de energía solar inteligente. Instalación, mantenimiento y monitoreo de paneles solares.">
+    <meta name="theme-color" content="#0a0e1a">
+    <title>EcoSolar ☀️ | Energía Solar Inteligente</title>
+
+    <!-- Favicon SVG Sol -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='20' fill='%23ffd32a'/%3E%3Cg stroke='%23f5a623' stroke-width='4' stroke-linecap='round'%3E%3Cline x1='50' y1='10' x2='50' y2='25'/%3E%3Cline x1='50' y1='75' x2='50' y2='90'/%3E%3Cline x1='10' y1='50' x2='25' y2='50'/%3E%3Cline x1='75' y1='50' x2='90' y2='50'/%3E%3Cline x1='22' y1='22' x2='33' y2='33'/%3E%3Cline x1='67' y1='67' x2='78' y2='78'/%3E%3Cline x1='78' y1='22' x2='67' y2='33'/%3E%3Cline x1='33' y1='67' x2='22' y2='78'/%3E%3C/g%3E%3C/svg%3E">
+
+    <!-- Directivas Anti-Caché para Carga Inmediata de Archivos Actualizados -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <!-- Hojas de Estilos CSS (Glassmorphism & Neon) con Cache-Buster -->
+    <link rel="stylesheet" href="css/style.css?v=2.6">
+
+    <!-- Librería Chart.js para Renderizado de Gráficas Estadísticas del Dashboard -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+    <!-- Partículas de fondo -->
+    <div id="particles-bg"></div>
+
+    <!-- Loading Spinner -->
+    <div id="spinner-overlay" class="spinner-overlay">
+        <div class="spinner">
+            <div class="spinner-ring"></div>
+            <div class="spinner-ring"></div>
+            <div class="spinner-ring"></div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Mobile Toggle -->
+    <button id="mobile-toggle" class="mobile-toggle" aria-label="Abrir menú">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+    </button>
+
+    <!-- Mobile Overlay -->
+    <div id="mobile-overlay" class="mobile-overlay"></div>
+
+    <!-- ==================== APP CONTAINER ==================== -->
+    <div class="app-container">
+
+        <!-- ========== SIDEBAR ========== -->
+        <aside id="sidebar" class="sidebar">
+            <!-- Logo -->
+            <div class="sidebar-logo">
+                <div class="logo-container">
+                    <svg class="logo-sun" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle class="sun-core" cx="50" cy="50" r="18" />
+                        <g class="sun-ray" opacity="0.9">
+                            <rect x="47" y="5" width="6" height="18" rx="3" />
+                            <rect x="47" y="77" width="6" height="18" rx="3" />
+                            <rect x="5" y="47" width="18" height="6" rx="3" />
+                            <rect x="77" y="47" width="18" height="6" rx="3" />
+                            <rect x="18.5" y="16" width="6" height="18" rx="3" transform="rotate(-45 21.5 25)" />
+                            <rect x="75.5" y="66" width="6" height="18" rx="3" transform="rotate(-45 78.5 75)" />
+                            <rect x="75.5" y="16" width="6" height="18" rx="3" transform="rotate(45 78.5 25)" />
+                            <rect x="18.5" y="66" width="6" height="18" rx="3" transform="rotate(45 21.5 75)" />
+                        </g>
+                    </svg>
+                    <span class="logo-text">EcoSolar</span>
+                </div>
+                <div class="logo-subtitle">Energía Inteligente</div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-page="page-dashboard">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+                        <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+                        <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+                        <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+                    </svg>
+                    <span class="nav-label">Dashboard</span>
+                    <span class="nav-badge">LIVE</span>
+                </a>
+
+                <a href="#" class="nav-item" data-page="page-solicitar">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="12" y1="18" x2="12" y2="12"></line>
+                        <line x1="9" y1="15" x2="15" y2="15"></line>
+                    </svg>
+                    <span class="nav-label">Solicitar Servicio</span>
+                </a>
+
+                <a href="#" class="nav-item" data-page="page-soporte">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    <span class="nav-label">Soporte Técnico</span>
+                </a>
+
+                <a href="#" class="nav-item" data-page="page-nosotros">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span class="nav-label">Sobre Nosotros</span>
+                </a>
+
+                <a href="#" class="nav-item" data-page="page-servicios">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                    </svg>
+                    <span class="nav-label">Nuestros Servicios</span>
+                </a>
+
+                <a href="#" class="nav-item" data-page="page-historial">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <span class="nav-label">Mi Historial</span>
+                </a>
+            </nav>
+
+            <!-- Footer -->
+            <div class="sidebar-footer">
+                <p>© 2026 EcoSolar</p>
+                <p>Todos los derechos reservados</p>
+            </div>
+        </aside>
+
+        <!-- ========== MAIN CONTENT ========== -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="page-header">
+                <div class="page-title">
+                    <span id="page-title-text">📊 Dashboard Energético</span>
+                </div>
+                <div class="header-time">
+                    <div class="status-dot"></div>
+                    <span>Sistema Activo</span>
+                    <span>|</span>
+                    <span id="header-clock">Cargando...</span>
+                </div>
+            </header>
+
+            <!-- ===== PAGE: DASHBOARD ===== -->
+            <section id="page-dashboard" class="page-content active">
+                <!-- Stats Cards -->
+                <div class="grid-4 stagger-children" style="margin-bottom: 28px;">
+                    <div class="stat-card animate-on-scroll">
+                        <div class="stat-icon cyan">☀️</div>
+                        <div class="stat-value" id="stat-total">0</div>
+                        <div class="stat-label">Paneles Totales</div>
+                        <div class="stat-change positive">▲ Sistema completo</div>
+                    </div>
+                    <div class="stat-card animate-on-scroll">
+                        <div class="stat-icon green">✅</div>
+                        <div class="stat-value" id="stat-activos">0</div>
+                        <div class="stat-label">Paneles Activos</div>
+                        <div class="stat-change positive">▲ Operativos</div>
+                    </div>
+                    <div class="stat-card animate-on-scroll">
+                        <div class="stat-icon orange">⚡</div>
+                        <div class="stat-value"><span id="stat-produccion">0</span></div>
+                        <div class="stat-label">Producción kWh</div>
+                        <div class="stat-change positive">▲ +12.5%</div>
+                    </div>
+                    <div class="stat-card animate-on-scroll">
+                        <div class="stat-icon purple">📈</div>
+                        <div class="stat-value"><span id="stat-eficiencia">0</span>%</div>
+                        <div class="stat-label">Eficiencia Media</div>
+                        <div class="stat-change positive">▲ Óptimo</div>
+                    </div>
+                </div>
+
+                <!-- Panel Grid Visual -->
+                <div class="glass-card animate-on-scroll" style="margin-bottom: 28px;">
+                    <div class="card-title">
+                        <span>☀️</span> Estado Visual de Paneles
+                    </div>
+                    <div id="panel-grid" class="panel-grid-visual stagger-children">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="grid-2" style="margin-bottom: 28px;">
+                    <div class="glass-card animate-on-scroll">
+                        <div class="card-title">
+                            <span>📊</span> Producción por Panel
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="chart-production"></canvas>
+                        </div>
+                    </div>
+                    <div class="glass-card animate-on-scroll">
+                        <div class="card-title">
+                            <span>🔄</span> Estado de Paneles
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="chart-efficiency"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Consumption Chart -->
+                <div class="glass-card animate-on-scroll">
+                    <div class="card-title">
+                        <span>📈</span> Producción vs Consumo — Últimos 7 días
+                    </div>
+                    <div class="chart-container" style="height: 320px;">
+                        <canvas id="chart-consumption"></canvas>
+                    </div>
+                </div>
+
+                <!-- Energy Flow Animation -->
+                <div class="glass-card animate-on-scroll" style="margin-top: 28px;">
+                    <div class="card-title">
+                        <span>🔋</span> Flujo de Energía en Tiempo Real
+                    </div>
+                    <div class="energy-flow">
+                        <!-- Lines rendered by JS -->
+                        <div style="position: absolute; top: 50%; left: 8%; transform: translateY(-50%); text-align: center; z-index: 2;">
+                            <div style="font-size: 2.5rem;">☀️</div>
+                            <div style="font-size: 0.7rem; color: var(--neon-yellow); font-family: Orbitron, sans-serif; margin-top: 4px;">SOLAR</div>
+                        </div>
+                        <div style="position: absolute; top: 50%; left: 40%; transform: translateY(-50%); text-align: center; z-index: 2;">
+                            <div style="font-size: 2.5rem;">🔋</div>
+                            <div style="font-size: 0.7rem; color: var(--neon-green); font-family: Orbitron, sans-serif; margin-top: 4px;">BATERÍA</div>
+                        </div>
+                        <div style="position: absolute; top: 50%; left: 72%; transform: translateY(-50%); text-align: center; z-index: 2;">
+                            <div style="font-size: 2.5rem;">🏠</div>
+                            <div style="font-size: 0.7rem; color: var(--neon-cyan); font-family: Orbitron, sans-serif; margin-top: 4px;">CONSUMO</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =========================================================================================
+                 VISTA 2: SOLICITAR SERVICIO (CREACIÓN / CREATE DE TRANSACCIONES)
+                 Formulario reactivo para alta de servicios fotovoltaicos en base de datos
+                 ========================================================================================= -->
+            <section id="page-solicitar" class="page-content">
+                <div class="grid-2">
+                    <div class="glass-card animate-on-scroll">
+                        <div class="card-title">
+                            <span>📋</span> Formulario de Solicitud
+                        </div>
+                        <form id="form-solicitar">
+                            <div class="form-group">
+                                <label class="form-label">Nombre Completo *</label>
+                                <input type="text" name="nombre_cliente" class="form-input" placeholder="Ej: Juan Pérez" required>
+                            </div>
+                            <div class="grid-2" style="gap: 16px;">
+                                <div class="form-group">
+                                    <label class="form-label">Correo Electrónico *</label>
+                                    <input type="email" name="email_cliente" class="form-input" placeholder="correo@ejemplo.com" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Teléfono</label>
+                                    <input type="tel" name="telefono_cliente" class="form-input" placeholder="+58 412 XXX XXXX">
+                                </div>
+                            </div>
+                            <div class="grid-2" style="gap: 16px;">
+                                <div class="form-group">
+                                    <label class="form-label">Tipo de Servicio *</label>
+                                    <select name="tipo_servicio" class="form-select" required>
+                                        <option value="">Seleccionar...</option>
+                                        <option value="instalacion_paneles">Instalación de Paneles</option>
+                                        <option value="mantenimiento">Mantenimiento</option>
+                                        <option value="consultoria">Consultoría Energética</option>
+                                        <option value="reparacion">Reparación</option>
+                                        <option value="ampliacion_sistema">Ampliación de Sistema</option>
+                                        <option value="monitoreo">Monitoreo Remoto</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Urgencia</label>
+                                    <select name="urgencia" class="form-select">
+                                        <option value="baja">Baja</option>
+                                        <option value="media" selected>Media</option>
+                                        <option value="alta">Alta</option>
+                                        <option value="critica">Crítica</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Dirección del Servicio *</label>
+                                <input type="text" name="direccion_servicio" class="form-input" placeholder="Dirección completa donde se realizará el servicio" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Descripción Adicional</label>
+                                <textarea name="descripcion" class="form-textarea" placeholder="Describe los detalles de tu solicitud..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block btn-lg">
+                                <span>⚡</span> Enviar Solicitud
+                            </button>
+                        </form>
+                    </div>
+
+                    <div>
+                        <div class="glass-card animate-on-scroll" style="margin-bottom: 24px;">
+                            <div class="card-title">
+                                <span>💡</span> ¿Por qué elegir EcoSolar?
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 16px;">
+                                <div style="display: flex; align-items: center; gap: 12px; padding: 16px; background: rgba(0, 245, 160, 0.05); border-radius: 12px; border: 1px solid rgba(0, 245, 160, 0.1);">
+                                    <span style="font-size: 1.5rem;">🏆</span>
+                                    <div>
+                                        <h4 style="font-family: Rajdhani, sans-serif; font-weight: 600; margin-bottom: 2px;">Tecnología de Vanguardia</h4>
+                                        <p style="font-size: 0.8rem; color: var(--text-secondary);">Utilizamos los paneles solares más eficientes del mercado.</p>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 12px; padding: 16px; background: rgba(0, 210, 255, 0.05); border-radius: 12px; border: 1px solid rgba(0, 210, 255, 0.1);">
+                                    <span style="font-size: 1.5rem;">⚡</span>
+                                    <div>
+                                        <h4 style="font-family: Rajdhani, sans-serif; font-weight: 600; margin-bottom: 2px;">Instalación Rápida</h4>
+                                        <p style="font-size: 0.8rem; color: var(--text-secondary);">En menos de 48 horas tu sistema estará funcionando.</p>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 12px; padding: 16px; background: rgba(123, 47, 247, 0.05); border-radius: 12px; border: 1px solid rgba(123, 47, 247, 0.1);">
+                                    <span style="font-size: 1.5rem;">🛡️</span>
+                                    <div>
+                                        <h4 style="font-family: Rajdhani, sans-serif; font-weight: 600; margin-bottom: 2px;">Garantía Extendida</h4>
+                                        <p style="font-size: 0.8rem; color: var(--text-secondary);">Todos nuestros servicios cuentan con garantía de 5 años.</p>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 12px; padding: 16px; background: rgba(245, 166, 35, 0.05); border-radius: 12px; border: 1px solid rgba(245, 166, 35, 0.1);">
+                                    <span style="font-size: 1.5rem;">📊</span>
+                                    <div>
+                                        <h4 style="font-family: Rajdhani, sans-serif; font-weight: 600; margin-bottom: 2px;">Monitoreo 24/7</h4>
+                                        <p style="font-size: 0.8rem; color: var(--text-secondary);">Seguimiento en tiempo real del rendimiento de tus paneles.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass-card animate-on-scroll">
+                            <div class="card-title">
+                                <span>📞</span> ¿Necesitas ayuda?
+                            </div>
+                            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 16px;">
+                                Si tienes dudas sobre qué servicio necesitas, no dudes en contactarnos.
+                            </p>
+                            <a href="https://wa.me/584125997664?text=Hola%20EcoSolar%2C%20necesito%20información%20sobre%20sus%20servicios" target="_blank" rel="noopener noreferrer" class="btn btn-success btn-block" style="text-decoration: none;">
+                                <span>💬</span> Escribir por WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== PAGE: SOPORTE TÉCNICO ===== -->
+            <section id="page-soporte" class="page-content">
+                <!-- Contact Cards -->
+                <div class="glass-card animate-on-scroll" style="margin-bottom: 28px;">
+                    <div class="card-title">
+                        <span>📡</span> Canales de Contacto Directo
+                    </div>
+                    <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;">
+                        Selecciona el canal que prefieras para comunicarte con nuestro equipo de soporte.
+                    </p>
+                    <div class="contact-grid stagger-children">
+                        <!-- Teléfono: tel: para móvil, en PC abre app de teléfono/Skype -->
+                        <a href="tel:+584125997664" class="contact-card" style="text-decoration: none; color: inherit;">
+                            <div class="contact-icon phone pulse-icon">📞</div>
+                            <div class="contact-title">Línea Directa</div>
+                            <div class="contact-info">+58 412 599 7664</div>
+                            <div style="font-size: 0.7rem; color: var(--neon-cyan); margin-top: 4px;">Toca para llamar</div>
+                        </a>
+
+                        <!-- Email: mailto: link -->
+                        <a href="mailto:ecosolar@gmail.com?subject=Consulta%20de%20Soporte%20EcoSolar" class="contact-card" style="text-decoration: none; color: inherit;">
+                            <div class="contact-icon email pulse-icon">📧</div>
+                            <div class="contact-title">Correo Electrónico</div>
+                            <div class="contact-info">ecosolar@gmail.com</div>
+                            <div style="font-size: 0.7rem; color: var(--neon-orange); margin-top: 4px;">Enviar correo</div>
+                        </a>
+
+                        <!-- WhatsApp: wa.me link (funciona en PC y móvil) -->
+                        <a href="https://wa.me/584125997664?text=Hola%20EcoSolar%2C%20necesito%20soporte%20t%C3%A9cnico" target="_blank" rel="noopener noreferrer" class="contact-card" style="text-decoration: none; color: inherit;">
+                            <div class="contact-icon whatsapp pulse-icon">💬</div>
+                            <div class="contact-title">WhatsApp</div>
+                            <div class="contact-info">+58 412 599 7664</div>
+                            <div style="font-size: 0.7rem; color: var(--neon-green); margin-top: 4px;">Abrir chat</div>
+                        </a>
+
+                        <!-- Ubicación: Google Maps link -->
+                        <a href="https://www.google.com/maps/search/IUTA+Guarenas+Miranda+Venezuela" target="_blank" rel="noopener noreferrer" class="contact-card" style="text-decoration: none; color: inherit;">
+                            <div class="contact-icon location pulse-icon">📍</div>
+                            <div class="contact-title">Ubicación</div>
+                            <div class="contact-info">IUTA, Guarenas, Miranda, Venezuela</div>
+                            <div style="font-size: 0.7rem; color: var(--neon-red); margin-top: 4px;">Ver en mapa</div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Support Form -->
+                <div class="grid-2">
+                    <div class="glass-card animate-on-scroll">
+                        <div class="card-title">
+                            <span>✉️</span> Enviar Mensaje de Soporte
+                        </div>
+                        <form id="form-soporte">
+                            <div class="form-group">
+                                <label class="form-label">Nombre Completo *</label>
+                                <input type="text" name="nombre" class="form-input" placeholder="Tu nombre completo" required>
+                            </div>
+                            <div class="grid-2" style="gap: 16px;">
+                                <div class="form-group">
+                                    <label class="form-label">Correo Electrónico *</label>
+                                    <input type="email" name="email" class="form-input" placeholder="correo@ejemplo.com" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Teléfono</label>
+                                    <input type="tel" name="telefono" class="form-input" placeholder="+58 XXX XXX XXXX">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Canal Preferido de Respuesta</label>
+                                <select name="canal_preferido" class="form-select">
+                                    <option value="email">Correo Electrónico</option>
+                                    <option value="telefono">Teléfono</option>
+                                    <option value="whatsapp">WhatsApp</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Asunto *</label>
+                                <input type="text" name="asunto" class="form-input" placeholder="Ej: Problema con panel solar" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Mensaje *</label>
+                                <textarea name="mensaje" class="form-textarea" placeholder="Describe tu problema o consulta con el mayor detalle posible..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-warning btn-block btn-lg">
+                                <span>🚀</span> Enviar Mensaje
+                            </button>
+                        </form>
+                    </div>
+
+                    <div>
+                        <div class="glass-card animate-on-scroll" style="margin-bottom: 24px;">
+                            <div class="card-title">
+                                <span>🕐</span> Horario de Atención
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 12px;">
+                                <div style="display: flex; justify-content: space-between; padding: 12px 16px; background: rgba(0, 245, 160, 0.05); border-radius: 8px;">
+                                    <span style="font-weight: 600;">Lunes - Viernes</span>
+                                    <span style="color: var(--neon-green);">8:00 AM - 6:00 PM</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; padding: 12px 16px; background: rgba(0, 210, 255, 0.05); border-radius: 8px;">
+                                    <span style="font-weight: 600;">Sábados</span>
+                                    <span style="color: var(--neon-cyan);">9:00 AM - 1:00 PM</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; padding: 12px 16px; background: rgba(255, 71, 87, 0.05); border-radius: 8px;">
+                                    <span style="font-weight: 600;">Domingos</span>
+                                    <span style="color: var(--neon-red);">Cerrado</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass-card animate-on-scroll" style="margin-bottom: 24px;">
+                            <div class="card-title">
+                                <span>⚡</span> Soporte de Emergencia
+                            </div>
+                            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 16px;">
+                                Para emergencias fuera de horario laboral, contáctanos directamente por WhatsApp o nuestra línea directa.
+                            </p>
+                            <a href="tel:+584125997664" class="btn btn-primary btn-block" style="text-decoration: none; margin-bottom: 10px;">
+                                <span>📞</span> Llamar Ahora
+                            </a>
+                            <a href="https://wa.me/584125997664?text=🚨%20EMERGENCIA%20-%20Necesito%20soporte%20técnico%20urgente" target="_blank" rel="noopener noreferrer" class="btn btn-success btn-block" style="text-decoration: none;">
+                                <span>💬</span> WhatsApp Urgente
+                            </a>
+                        </div>
+
+                        <div class="glass-card animate-on-scroll">
+                            <div class="card-title">
+                                <span>❓</span> Preguntas Frecuentes
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 12px;">
+                                <details style="padding: 12px; background: rgba(255,255,255,0.03); border-radius: 8px; cursor: pointer;">
+                                    <summary style="font-weight: 600; font-size: 0.9rem;">¿Cuánto tarda una reparación?</summary>
+                                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 8px;">
+                                        Dependiendo de la complejidad, entre 24 y 72 horas hábiles.
+                                    </p>
+                                </details>
+                                <details style="padding: 12px; background: rgba(255,255,255,0.03); border-radius: 8px; cursor: pointer;">
+                                    <summary style="font-weight: 600; font-size: 0.9rem;">¿Ofrecen garantía en reparaciones?</summary>
+                                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 8px;">
+                                        Sí, todas nuestras reparaciones tienen garantía de 6 meses.
+                                    </p>
+                                </details>
+                                <details style="padding: 12px; background: rgba(255,255,255,0.03); border-radius: 8px; cursor: pointer;">
+                                    <summary style="font-weight: 600; font-size: 0.9rem;">¿Realizan visitas a domicilio?</summary>
+                                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 8px;">
+                                        Sí, cubrimos Caracas, Guarenas, Guatire y zonas aledañas.
+                                    </p>
+                                </details>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== PAGE: SOBRE NOSOTROS ===== -->
+            <section id="page-nosotros" class="page-content">
+                <!-- Hero -->
+                <div class="about-hero animate-on-scroll">
+                    <div class="sun-animation">
+                        <div class="core"></div>
+                        <!-- Rays rendered by JS -->
+                    </div>
+                    <h2>EcoSolar</h2>
+                    <p>Transformando el futuro energético de Venezuela con soluciones solares innovadoras, accesibles y sostenibles.</p>
+                    <div class="about-year">
+                        <span>☀️</span> Fundada en Octubre 2026
+                    </div>
+                </div>
+
+                <!-- Mission & Vision -->
+                <div class="grid-2" style="margin-bottom: 28px;">
+                    <div class="glass-card animate-on-scroll">
+                        <div class="card-title">
+                            <span>🎯</span> Nuestra Misión
+                        </div>
+                        <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8;">
+                            En <span class="glow-text" style="color: var(--neon-cyan); font-weight: 600;">EcoSolar</span>, nuestra misión es democratizar el acceso a la energía solar en Venezuela y Latinoamérica. Creemos que cada hogar, negocio e institución merece acceder a energía limpia, confiable y económica. Trabajamos incansablemente para ofrecer soluciones de vanguardia que no solo reduzcan costos, sino que también contribuyan a un planeta más sostenible.
+                        </p>
+                    </div>
+                    <div class="glass-card animate-on-scroll">
+                        <div class="card-title">
+                            <span>🔭</span> Nuestra Visión
+                        </div>
+                        <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8;">
+                            Nuestra meta es clara y ambiciosa: <span style="color: var(--neon-green); font-weight: 700;">dominar el mercado de energía solar en los próximos 10 años</span>. Para el año <span style="color: var(--neon-yellow); font-weight: 700;">2036</span>, aspiramos a ser la empresa líder en soluciones solares de toda Latinoamérica, expandiendo nuestra presencia desde Venezuela hacia toda la región, llevando luz y progreso a millones de personas.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Mission Block -->
+                <div class="mission-block animate-on-scroll" style="margin-bottom: 28px;">
+                    <h3>🚀 Nuestro Compromiso con el Futuro</h3>
+                    <p>
+                        Desde nuestra fundación en <span class="highlight">octubre de 2026</span>, nos hemos propuesto revolucionar la industria energética. 
+                        Con sede en el <span class="highlight">IUTA de Guarenas, estado Miranda, Venezuela</span>, nacimos con la convicción de que la energía solar 
+                        es el pilar fundamental para el desarrollo sostenible de nuestro país.
+                        <br><br>
+                        Nuestra visión a <span class="highlight">10 años (2026-2036)</span> contempla la expansión territorial a nivel nacional e internacional, 
+                        la investigación y desarrollo de tecnologías solares propias, y la formación de una nueva generación de técnicos especializados 
+                        en energías renovables. <span class="highlight">No nos conformamos con participar en el mercado: vinimos a dominarlo.</span>
+                        <br><br>
+                        Cada panel que instalamos, cada sistema que monitoreamos y cada cliente que atendemos es un paso más hacia 
+                        un futuro donde la energía limpia sea la norma y no la excepción. Somos <span class="highlight">EcoSolar</span>: energía inteligente 
+                        para un mundo que lo necesita.
+                    </p>
+                </div>
+
+                <!-- Timeline -->
+                <div class="glass-card animate-on-scroll" style="margin-bottom: 28px;">
+                    <div class="card-title">
+                        <span>📅</span> Nuestra Trayectoria y Hoja de Ruta
+                    </div>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <h4>Octubre 2026 — Fundación</h4>
+                            <p>EcoSolar nace en el IUTA de Guarenas con un equipo de ingenieros y técnicos apasionados por la energía solar. Iniciamos operaciones con foco en instalación residencial y comercial.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot" style="background: var(--neon-green); box-shadow: 0 0 10px var(--neon-green);"></div>
+                            <h4>2027 — Expansión Regional</h4>
+                            <p>Plan de expansión a toda el área metropolitana de Caracas y los Altos Mirandinos. Lanzamiento de nuestro sistema de monitoreo remoto en tiempo real.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot" style="background: var(--neon-purple); box-shadow: 0 0 10px var(--neon-purple);"></div>
+                            <h4>2028 — Innovación Tecnológica</h4>
+                            <p>Desarrollo de nuestra propia línea de controladores inteligentes para optimización energética. Alianzas estratégicas con fabricantes internacionales.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot" style="background: var(--neon-orange); box-shadow: 0 0 10px var(--neon-orange);"></div>
+                            <h4>2030 — Cobertura Nacional</h4>
+                            <p>Presencia en los principales estados de Venezuela. Centro de investigación y desarrollo propio. Más de 10,000 instalaciones completadas.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot" style="background: var(--neon-yellow); box-shadow: 0 0 10px var(--neon-yellow);"></div>
+                            <h4>2036 — Liderazgo Continental</h4>
+                            <p>Meta: ser la empresa #1 de energía solar en Latinoamérica. Operaciones en al menos 5 países. Tecnología propia de almacenamiento energético.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Values -->
+                <div class="glass-card animate-on-scroll">
+                    <div class="card-title">
+                        <span>💎</span> Nuestros Valores
+                    </div>
+                    <div class="values-grid stagger-children">
+                        <div class="value-item">
+                            <div class="value-icon">🌱</div>
+                            <h4>Sostenibilidad</h4>
+                            <p>Cada acción que tomamos considera su impacto ambiental a largo plazo.</p>
+                        </div>
+                        <div class="value-item">
+                            <div class="value-icon">💡</div>
+                            <h4>Innovación</h4>
+                            <p>Buscamos constantemente nuevas tecnologías y métodos para mejorar.</p>
+                        </div>
+                        <div class="value-item">
+                            <div class="value-icon">🤝</div>
+                            <h4>Compromiso</h4>
+                            <p>Con nuestros clientes, nuestro equipo y el planeta. Sin excusas.</p>
+                        </div>
+                        <div class="value-item">
+                            <div class="value-icon">🎓</div>
+                            <h4>Excelencia</h4>
+                            <p>No buscamos ser buenos, buscamos ser los mejores en cada proyecto.</p>
+                        </div>
+                        <div class="value-item">
+                            <div class="value-icon">🌍</div>
+                            <h4>Accesibilidad</h4>
+                            <p>La energía solar debe estar al alcance de todos, sin excepción.</p>
+                        </div>
+                        <div class="value-item">
+                            <div class="value-icon">⚡</div>
+                            <h4>Liderazgo</h4>
+                            <p>Nacimos para liderar la revolución energética en Latinoamérica.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== PAGE: NUESTROS SERVICIOS ===== -->
+            <section id="page-servicios" class="page-content">
+                <div class="glass-card animate-on-scroll" style="margin-bottom: 28px;">
+                    <div class="card-title">
+                        <span>⚡</span> Soluciones Integrales de Energía Solar
+                    </div>
+                    <p style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 8px;">
+                        Ofrecemos una gama completa de servicios para que aproveches al máximo la energía del sol.
+                    </p>
+                </div>
+
+                <div class="services-grid stagger-children">
+                    <div class="service-card animate-on-scroll">
+                        <div class="service-icon" style="background: rgba(0, 210, 255, 0.15);">☀️</div>
+                        <h3>Instalación de Paneles Solares</h3>
+                        <p>Diseño e instalación profesional de sistemas fotovoltaicos para hogares, comercios e industrias. Paneles de alta eficiencia con garantía extendida.</p>
+                    </div>
+                    <div class="service-card animate-on-scroll">
+                        <div class="service-icon" style="background: rgba(0, 245, 160, 0.15);">🔧</div>
+                        <h3>Mantenimiento Preventivo</h3>
+                        <p>Programas de mantenimiento regular para asegurar el máximo rendimiento. Limpieza, inspección y optimización periódica.</p>
+                    </div>
+                    <div class="service-card animate-on-scroll">
+                        <div class="service-icon" style="background: rgba(123, 47, 247, 0.15);">📊</div>
+                        <h3>Consultoría Energética</h3>
+                        <p>Análisis personalizado de tus necesidades energéticas. Te ayudamos a diseñar el sistema perfecto para maximizar tu ahorro.</p>
+                    </div>
+                    <div class="service-card animate-on-scroll">
+                        <div class="service-icon" style="background: rgba(245, 166, 35, 0.15);">🛠️</div>
+                        <h3>Reparación Especializada</h3>
+                        <p>Diagnóstico y reparación de sistemas solares con repuestos originales. Servicio express para emergencias.</p>
+                    </div>
+                    <div class="service-card animate-on-scroll">
+                        <div class="service-icon" style="background: rgba(255, 71, 87, 0.15);">🔋</div>
+                        <h3>Ampliación de Sistemas</h3>
+                        <p>¿Necesitas más energía? Ampliamos tu sistema con paneles adicionales, baterías e inversores de mayor capacidad.</p>
+                    </div>
+                    <div class="service-card animate-on-scroll">
+                        <div class="service-icon" style="background: rgba(255, 211, 42, 0.15);">📡</div>
+                        <h3>Monitoreo Remoto 24/7</h3>
+                        <p>Sistema de monitoreo inteligente en tiempo real. Recibe alertas automáticas sobre el rendimiento y estado de tus paneles.</p>
+                    </div>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <!-- CTA -->
+                <div class="glass-card animate-on-scroll" style="text-align: center; padding: 40px;">
+                    <h3 style="font-family: Orbitron, sans-serif; font-size: 1.3rem; margin-bottom: 12px; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                        ¿Listo para dar el paso hacia la energía solar?
+                    </h3>
+                    <p style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 24px; max-width: 500px; margin-left: auto; margin-right: auto;">
+                        Solicita una cotización gratuita y descubre cuánto puedes ahorrar.
+                    </p>
+                    <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+                        <a href="#" class="btn btn-primary btn-lg" onclick="event.preventDefault(); document.querySelector('[data-page=page-solicitar]').click();">
+                            <span>📋</span> Solicitar Servicio
+                        </a>
+                        <a href="https://wa.me/584125997664?text=Hola%20EcoSolar%2C%20me%20interesa%20una%20cotización" target="_blank" rel="noopener noreferrer" class="btn btn-success btn-lg" style="text-decoration: none;">
+                            <span>💬</span> Cotizar por WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =========================================================================================
+                 VISTA 6: MI HISTORIAL (CENTRAL DE CONSULTA, ACTUALIZACIÓN Y ELIMINACIÓN - CRUD)
+                 Presenta la lista de solicitudes y tickets con botones interactivos [✏️ Editar] y [🗑️ Eliminar]
+                 ========================================================================================= -->
+            <section id="page-historial" class="page-content">
+                <div class="glass-card animate-on-scroll" style="margin-bottom: 28px;">
+                    <div class="card-title">
+                        <span>📁</span> Registro de Actividades
+                    </div>
+                    <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;">
+                        Aquí puedes ver el historial de todas tus solicitudes de servicio, contactos de soporte y actividades realizadas.
+                    </p>
+                </div>
+
+                <div class="glass-card animate-on-scroll">
+                    <div id="historial-list">
+                        <div class="history-empty">
+                            <div class="empty-icon">📂</div>
+                            <h3>Cargando historial...</h3>
+                            <p>Obteniendo tus registros de actividad...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <div class="glass-card animate-on-scroll" style="text-align: center; padding: 32px;">
+                    <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 16px;">
+                        ¿Necesitas realizar una nueva solicitud o contactar a soporte?
+                    </p>
+                    <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+                        <a href="#" class="btn btn-primary" onclick="event.preventDefault(); document.querySelector('[data-page=page-solicitar]').click();">
+                            <span>📋</span> Nueva Solicitud
+                        </a>
+                        <a href="#" class="btn btn-warning" onclick="event.preventDefault(); document.querySelector('[data-page=page-soporte]').click();">
+                            <span>🛠️</span> Contactar Soporte
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/app.js?v=2.6"></script>
+</body>
+</html>
